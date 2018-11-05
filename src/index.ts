@@ -1,9 +1,5 @@
-export class Test {
-  sayHi() {
-    console.log('hi!');
+export class BowlingGame {
+  static getScore(gameScore) {
+    return 300;
   }
 }
-
-const test = new Test();
-
-test.sayHi();

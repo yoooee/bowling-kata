@@ -1,15 +1,12 @@
-import { Test } from './index';
+import { BowlingGame } from './index';
+describe('Bowling', () => {
+  describe('all strikes', () => {
+    it('should return a score of 300', () => {
+      let perfectGameScore = 'X X X X X X X X X X X X';
+      let expected = 300;
+      let actual = BowlingGame.getScore(perfectGameScore);
 
-describe('Test', () => {
-  let subject;
-
-  beforeEach(() => {
-    subject = new Test();
-    spyOn(console, 'log');
-  });
-
-  it('displays "hi!" in the console', () => {
-    subject.sayHi();
-    expect(console.log).toHaveBeenCalledWith('hi!');
+      expect(actual).toEqual(expected);
+    });
   });
 });
