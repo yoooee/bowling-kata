@@ -40,4 +40,15 @@ describe('Bowling', () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  describe('all 2s for roll 1 and spares for roll 2', () => {
+    it('should return a score of 120', () => {
+      let gamescore = '2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/2';
+      let expected = 120;
+      let actual = BowlingGame.getScore(gamescore);
+
+      expect(actual).toEqual(expected);
+
+    });
+  });
 });

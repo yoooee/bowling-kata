@@ -25,18 +25,35 @@ export class BowlingGame {
 
 
   static getStandardScore(gameScores) {
-    let standardScore = gameScores.reduce(function(score, frame){
-      let rolls = frame.split('');
+    let standardScore = gameScores.reduce(function(score, frame, index) {
+      let rolls = BowlingGame.getRollsPerFrame(frame);
 
       if(rolls[1] === '-') {
         return score + +rolls[0];
       } else if (rolls[1] === '/') {
-        // spare
+        if (index < 9 ) {
+          let nextFrameRoll1Score = BowlingGame.getRollsPerFrame(gameScores[index + 1][0]);
+          return +score + 10 + +nextFrameRoll1Score;
+        } else {
+          let finalFrameScore = rolls.reduce(function(score, roll) {
+            if(roll === 'X') {
+              return 10;
+            } else if (roll === '/') {
+              return 10;
+            } else {
+              return +score + +roll;
+            }
+          }, 0);
+          return +score + +finalFrameScore;
+        }
       } else {
-        console.log('rolls total = ', +rolls[0] + +rolls[1]);
         return +score + +rolls[0] + +rolls[1];
       }
     }, 0);
     return standardScore;
+  }
+
+  static getRollsPerFrame(frame) {
+    return frame.split('');
   }
 }
