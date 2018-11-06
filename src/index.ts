@@ -27,8 +27,14 @@ export class BowlingGame {
   static getStandardScore(gameScores) {
     let standardScore = gameScores.reduce(function(score, frame){
       let rolls = frame.split('');
+
       if(rolls[1] === '-') {
         return score + +rolls[0];
+      } else if (rolls[1] === '/') {
+        // spare
+      } else {
+        console.log('rolls total = ', +rolls[0] + +rolls[1]);
+        return +score + +rolls[0] + +rolls[1];
       }
     }, 0);
     return standardScore;

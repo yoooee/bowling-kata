@@ -23,9 +23,19 @@ describe('Bowling', () => {
 
   describe('all 9s for roll 1 and gutter balls for roll 2', () => {
     it('should return a score of 90', () => {
-      let GameScore = '9- 9- 9- 9- 9- 9- 9- 9- 9- 9-';
+      let gamescore = '9- 9- 9- 9- 9- 9- 9- 9- 9- 9-';
       let expected = 90;
-      let actual = BowlingGame.getScore(GameScore);
+      let actual = BowlingGame.getScore(gamescore);
+
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('all 5s for roll 1 and 2s for roll 2', () => {
+    it('should return a score of 90', () => {
+      let gamescore = '52 52 52 52 52 52 52 52 52 52';
+      let expected = 70;
+      let actual = BowlingGame.getScore(gamescore);
 
       expect(actual).toEqual(expected);
     });
