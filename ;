@@ -1,0 +1,12 @@
+export class BowlingGame {
+  private _gameScore: Array<string>;
+
+  getScore(gameScore) {
+    const gameScoreArray = gameScore.split(' ');
+
+    gameScoreArray.forEach((element) => {
+      console.log('element = ', element);
+    });
+  }
+}
+
