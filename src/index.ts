@@ -1,7 +1,7 @@
 export class BowlingGame {
   static getScore(gameScore) {
     let gameScores = gameScore.split(' ');
-
+    console.log('### New Game #####################################################');
     if(BowlingGame.checkPerfectGame(gameScores)) {
       return 300;
     } else if (BowlingGame.checkGutterGame(gameScores)) {
@@ -23,37 +23,34 @@ export class BowlingGame {
     });
   }
 
-
   static getStandardScore(gameScores) {
-    let standardScore = gameScores.reduce(function(score, frame, index) {
-      let rolls = BowlingGame.getRollsPerFrame(frame);
+    let score: number = 0;
 
-      if(rolls[1] === '-') {
-        return score + +rolls[0];
-      } else if (rolls[1] === '/') {
-        if (index < 9 ) {
-          let nextFrameRoll1Score = BowlingGame.getRollsPerFrame(gameScores[index + 1][0]);
-          return +score + 10 + +nextFrameRoll1Score;
-        } else {
-          let finalFrameScore = rolls.reduce(function(score, roll) {
-            if(roll === 'X') {
-              return 10;
-            } else if (roll === '/') {
-              return 10;
-            } else {
-              return +score + +roll;
-            }
-          }, 0);
-          return +score + +finalFrameScore;
-        }
-      } else {
-        return +score + +rolls[0] + +rolls[1];
-      }
+    score = gameScores.reduce((gameScore, currentFrame, currentFrameIndex) => {
+      const rolls = BowlingGame.getRolls(currentFrame);
+
+      const currentFrameScore = rolls.reduce((frameScore, currentRoll, currentRollIndex) => {
+        return frameScore += +BowlingGame.getPointValue(currentRoll);
+      }, 0);
+      return gameScore + +currentFrameScore;
     }, 0);
-    return standardScore;
+
+    return score;
   }
 
-  static getRollsPerFrame(frame) {
-    return frame.split('');
+  static getPointValue(roll) {
+    if(roll === '-') {
+      return 0;
+    } else if (roll === '/') {
+      return 10;
+    } else if (roll === 'X') {
+      return 10;
+    } else {
+      return roll;
+    }
+  }
+
+  static getRolls(frame) {
+    return frame.split(''); 
   }
 }

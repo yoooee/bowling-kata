@@ -21,7 +21,7 @@ describe('Bowling', () => {
     });
   });
 
-  describe('all 9s for roll 1 and gutter balls for roll 2', () => {
+  fdescribe('all 9s for roll 1 and gutter balls for roll 2', () => {
     it('should return a score of 90', () => {
       let gamescore = '9- 9- 9- 9- 9- 9- 9- 9- 9- 9-';
       let expected = 90;
@@ -41,14 +41,23 @@ describe('Bowling', () => {
     });
   });
 
-  describe('all 2s for roll 1 and spares for roll 2', () => {
+  xdescribe('all 2s for roll 1 and spares for roll 2', () => {
     it('should return a score of 120', () => {
       let gamescore = '2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/2';
       let expected = 120;
       let actual = BowlingGame.getScore(gamescore);
 
       expect(actual).toEqual(expected);
+    });
+  });
 
+  xdescribe('a variety of standard scores with strikes', () => {
+    it('should return a score of 150', () => {
+      let gamescore = '54 72 9- X 81 X X 81 9- XXX';
+      let expected = 150;
+      let actual = BowlingGame.getScore(gamescore);
+
+      expect(actual).toEqual(expected);
     });
   });
 });
