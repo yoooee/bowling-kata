@@ -9,7 +9,7 @@ describe('Bowling', () => {
 
   describe('all strikes', () => {
     it('should return a score of 300', () => {
-      let GameScore = 'X X X X X X X X X X X X';
+      let GameScore = 'X X X X X X X X X XXX';
       let expected = 300;
       let actual = bowlingGame.getScore(GameScore);
 
@@ -17,9 +17,9 @@ describe('Bowling', () => {
     });
   });
 
-  fdescribe('all gutter balls', () => {
+  describe('all gutter balls', () => {
     it('should return a score of 0', () => {
-      let GameScore = '-- -- -- -- -- -- -- -- -- -- -- --';
+      let GameScore = '-- -- -- -- -- -- -- -- -- --';
       let expected = 0;
       let actual = bowlingGame.getScore(GameScore);
 

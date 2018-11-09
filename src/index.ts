@@ -1,30 +1,73 @@
 export class BowlingGame {
-  private _gameScore: Array<string>;
+  private _gameScores: Array<number>;
 
   getScore(gameScore) {
     const gameScoreArray = gameScore.split(' ');
     let gameScorePoints = 0;
 
-    gameScoreArray.forEach((frame) => {
-      const frameArray = frame.split('');
-      let frameScore = 0;
+    this._gameScores = this.convertGameScoreToArray(gameScoreArray);
 
-      frameArray.forEach((roll) => {
-        frameScore += this.getRollValue(roll);
-      });
+    for (let i = 0; i < this._gameScores.length; i++) {
+      let bonusScore = 0;
+      const roll1 = this._gameScores[i][0] | 0;
+      const roll2 = this._gameScores[i][1] | 0;
+      const roll3 = this._gameScores[i][2] | 0;
+      let frameTotal = roll1 + roll2 + roll3;
 
-      gameScorePoints += frameScore;
-    });
+      if (frameTotal === 10) {
+        bonusScore = this.getNextRoll(i);
+        // it's either a spare or a strike.  Get next frame Score
+        if (bonusScore === 10) {
+          // strike, get extra next score
+            bonusScore += this.getNextRoll(i +  1);
+        } else {
+          bonusScore = this._gameScores[i + 1][0];
+        }
+      }
+      gameScorePoints += frameTotal + bonusScore;
+    }
 
-    console.log('-----------------', gameScorePoints);
     return gameScorePoints;
+  }
+
+  getNextRoll(currentFrame) {
+    let nextRoll = 0;
+
+    if(currentFrame < 9) {
+      nextRoll =  this._gameScores[currentFrame + 1][0];
+    } else {
+      nextRoll = this._gameScores[currentFrame][1];
+    }
+    return nextRoll;
+
+  }
+
+  convertGameScoreToArray(gameScore) {
+    return gameScore.map((frame) => {
+      const rolls = frame.split('');
+      let rollValue = 0;
+      const rollScores = rolls.map((roll, index) => {
+        if ((index === 1) && (roll === '/')) {
+          rollValue = this.getRollValue(roll) - rolls[index -1];
+        } else {
+          rollValue = this.getRollValue(roll);
+        }
+        return rollValue;
+      });
+      return rollScores;
+    });
   }
 
   getRollValue(roll) {
     if (roll === '-') { return 0; }
     if ((roll === 'X') || (roll === '/')) { return 10; }
-
-    return roll;
+    return parseInt(roll);
   }
 }
+
+//let gamescore = '54 72 9- X 81 X X 81 9- XXX';
+let gamescore = '5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 50';
+//let gamescore = 'X X X X X X X X X XXX';
+let myGame = new BowlingGame();
+console.log(myGame.getScore(gamescore));
 
