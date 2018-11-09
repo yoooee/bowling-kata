@@ -2,10 +2,9 @@ export class BowlingGame {
   private _gameScores: Array<number>;
 
   getScore(gameScore) {
-    const gameScoreArray = gameScore.split(' ');
+    const gameFrames = gameScore.split(' ');
     let gameScorePoints = 0;
-
-    this._gameScores = this.convertGameScoreToArray(gameScoreArray);
+    this._gameScores = this.convertGameScoreToArray(gameFrames);
 
     for (let i = 0; i < this._gameScores.length; i++) {
       let bonusScore = 0;
@@ -16,9 +15,7 @@ export class BowlingGame {
 
       if (frameTotal === 10) {
         bonusScore = this.getNextRoll(i);
-        // it's either a spare or a strike.  Get next frame Score
         if (bonusScore === 10) {
-          // strike, get extra next score
             bonusScore += this.getNextRoll(i +  1);
         } else {
           bonusScore = this.getNextRoll(i);
