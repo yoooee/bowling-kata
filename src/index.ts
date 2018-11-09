@@ -11,7 +11,7 @@ export class BowlingGame {
       const roll1 = this._gameScores[i][0] | 0;
       const roll2 = this._gameScores[i][1] | 0;
       const roll3 = this._gameScores[i][2] | 0;
-      let frameTotal = roll1 + roll2 + roll3;
+      const frameTotal = roll1 + roll2 + roll3;
 
       if (frameTotal === 10) {
         bonusScore = this.getNextRoll(i);
