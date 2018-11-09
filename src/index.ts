@@ -30,14 +30,7 @@ export class BowlingGame {
 
   getNextRoll(currentFrame) {
     let nextRollValue = 0;
-
-    if(currentFrame < LAST_FRAME) {
-      nextRollValue =  this._gameScores[currentFrame + 1][0];
-    } else {
-      nextRollValue = this._gameScores[currentFrame][1];
-    }
-    return nextRollValue;
-
+    return currentFrame < LAST_FRAME ? this._gameScores[currentFrame + 1][0] : this._gameScores[currentFrame][1];
   }
 
   convertGameScoreToArray(gameScore) {
