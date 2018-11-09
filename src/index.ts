@@ -29,14 +29,14 @@ export class BowlingGame {
   }
 
   getNextRoll(currentFrame) {
-    let nextRoll = 0;
+    let nextRollValue = 0;
 
     if(currentFrame < LAST_FRAME) {
-      nextRoll =  this._gameScores[currentFrame + 1][0];
+      nextRollValue =  this._gameScores[currentFrame + 1][0];
     } else {
-      nextRoll = this._gameScores[currentFrame][1];
+      nextRollValue = this._gameScores[currentFrame][1];
     }
-    return nextRoll;
+    return nextRollValue;
 
   }
 
