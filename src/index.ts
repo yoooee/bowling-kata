@@ -21,7 +21,7 @@ export class BowlingGame {
           // strike, get extra next score
             bonusScore += this.getNextRoll(i +  1);
         } else {
-          bonusScore = this._gameScores[i + 1][0];
+          bonusScore = this.getNextRoll(i);
         }
       }
       gameScorePoints += frameTotal + bonusScore;
