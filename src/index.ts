@@ -1,3 +1,4 @@
+const LAST_FRAME = 9;
 export class BowlingGame {
   private _gameScores: Array<number>;
 
@@ -30,7 +31,7 @@ export class BowlingGame {
   getNextRoll(currentFrame) {
     let nextRoll = 0;
 
-    if(currentFrame < 9) {
+    if(currentFrame < LAST_FRAME) {
       nextRoll =  this._gameScores[currentFrame + 1][0];
     } else {
       nextRoll = this._gameScores[currentFrame][1];
