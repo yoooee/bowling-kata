@@ -48,11 +48,6 @@ export class BowlingGame {
     return gameScorePoints;
   }
 
-  getNextRoll(currentFrame) {
-    let nextRollValue = 0;
-    return currentFrame < LAST_FRAME ? this._gameScores[currentFrame + 1][0] : this._gameScores[currentFrame][1];
-  }
-
   convertGameScoreToArray(gameScore) {
     return gameScore.map((frame) => {
       const rolls = frame.split('');
