@@ -87,7 +87,7 @@ describe('Bowling', () => {
     });
   });
 
-  xdescribe('all 2s for roll 1 and spares for roll 2', () => {
+  describe('all 2s for roll 1 and spares for roll 2', () => {
     it('should return a score of 120', () => {
       let gamescore = '2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/ 2/2';
       let expected = 120;
@@ -97,7 +97,7 @@ describe('Bowling', () => {
     });
   });
 
-  xdescribe('a variety of standard scores with strikes', () => {
+  describe('a variety of standard scores with strikes', () => {
     it('should return a score of 150', () => {
       let gamescore = '54 72 9- X 81 X X 81 9- XXX';
       let expected = 150;

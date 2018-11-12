@@ -1,4 +1,5 @@
 const LAST_FRAME = 9;
+
 export class BowlingGame {
   private _gameScores: Array<number>;
 
@@ -12,17 +13,36 @@ export class BowlingGame {
       const roll1 = this._gameScores[i][0] | 0;
       const roll2 = this._gameScores[i][1] | 0;
       const roll3 = this._gameScores[i][2] | 0;
-      const frameTotal = roll1 + roll2 + roll3;
+      const frameScore = roll1 + roll2 + roll3;
 
-      if (frameTotal === 10) {
-        bonusScore = this.getNextRoll(i);
-        if (bonusScore === 10) {
-            bonusScore += this.getNextRoll(i +  1);
-        } else {
-          bonusScore = this.getNextRoll(i);
+
+      const currentFrame = i;
+      const nextFrame = i + 1;
+      const nextNextFrame = i + 2;
+
+      if (currentFrame < 8) {
+        if (frameScore === 10) {
+          bonusScore = this._gameScores[nextFrame][0];
+
+          if (bonusScore === 10) {
+            bonusScore += this._gameScores[nextNextFrame][0];
+          } else {
+            if (this._gameScores[currentFrame][0] === 10) {
+              bonusScore += this._gameScores[nextFrame][1];
+            }
+          }
+        }
+      } else {
+        if (frameScore === 10) {
+          bonusScore = this._gameScores[nextFrame][0];
+
+          if (bonusScore === 10) {
+            bonusScore  += this._gameScores[nextFrame][1]
+          }
         }
       }
-      gameScorePoints += frameTotal + bonusScore;
+
+      gameScorePoints += frameScore + bonusScore;
     }
 
     return gameScorePoints;
@@ -55,10 +75,4 @@ export class BowlingGame {
     return parseInt(roll);
   }
 }
-
-//let gamescore = '54 72 9- X 81 X X 81 9- XXX';
-let gamescore = '5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 50';
-//let gamescore = 'X X X X X X X X X XXX';
-let myGame = new BowlingGame();
-console.log(myGame.getScore(gamescore));
 
