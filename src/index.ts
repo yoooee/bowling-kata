@@ -1,4 +1,9 @@
 const LAST_FRAME = 9;
+enum RollValue {
+  'X' = 10,
+  '/' = 10,
+  '-' = 0
+}
 
 export class BowlingGame {
   private _gameScores: Array<number>;
@@ -6,7 +11,7 @@ export class BowlingGame {
   getScore(gameScore) {
     const gameFrames = gameScore.split(' ');
     let gameScorePoints = 0;
-    this._gameScores = this.convertGameScoreToArray(gameFrames);
+    this._gameScores = this.convertGameScoreToArray(gameFrames, RollValue);
 
     for (let i = 0; i < this._gameScores.length; i++) {
       let bonusScore = 0;
@@ -14,8 +19,6 @@ export class BowlingGame {
       const roll2 = this._gameScores[i][1] | 0;
       const roll3 = this._gameScores[i][2] | 0;
       const frameScore = roll1 + roll2 + roll3;
-
-
       const currentFrame = i;
       const nextFrame = i + 1;
       const nextNextFrame = i + 2;
@@ -48,13 +51,13 @@ export class BowlingGame {
     return gameScorePoints;
   }
 
-  convertGameScoreToArray(gameScore) {
+  convertGameScoreToArray(gameScore, RollValue) {
     return gameScore.map((frame) => {
       const rolls = frame.split('');
       let rollValue = 0;
       const rollScores = rolls.map((roll, index) => {
         if ((index === 1) && (roll === '/')) {
-          rollValue = this.getRollValue(roll) - rolls[index -1];
+          rollValue = RollValue[roll] - rolls[index -1];
         } else {
           rollValue = this.getRollValue(roll);
         }
