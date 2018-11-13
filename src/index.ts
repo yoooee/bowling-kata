@@ -4,6 +4,30 @@ const STRIKE = 10;
 const GAME_SCORE_DELIMITER = ' ';
 const FRAME_ROLL_DELIMITER = '';
 
+class Frame {
+  private _total: number = 0;
+
+  constructor(private _roll1: number = 0, private _roll2: number = 0, private _roll3: number = 0) { 
+    this._total = _roll1 + _roll2 + _roll3;
+  }
+
+  get roll1(): number {
+    return this._roll1;
+  }
+
+  get roll2(): number {
+    return this._roll2;
+  }
+
+  get roll3(): number {
+    return this._roll3;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+}
+
 export class BowlingGame {
   private _gameScores: Array<number>;
 
@@ -11,35 +35,32 @@ export class BowlingGame {
     let gameScorePoints = 0;
     this._gameScores = this.convertGameScoresToValues(gameScore.split(GAME_SCORE_DELIMITER));
 
-     return this._gameScores.reduce((totalScore: number, currentFrame: number, index: number) => {
-       return totalScore + this.getCurrentFrameScore(currentFrame, index);
+    return this._gameScores.reduce((totalScore: number, currentFrame: number, index: number) => {
+      return totalScore + this.getCurrentFrameScore(currentFrame, index);
     }, 0);
   }
 
   getCurrentFrameScore(currentFrame, index) {
-      let bonusScore = 0;
-      const roll1 = currentFrame[0] | 0;
-      const roll2 = currentFrame[1] | 0;
-      const roll3 = currentFrame[2] | 0;
-      const totalFrameScore = roll1 + roll2 + roll3;
+    let bonusScore = 0;
+    const frame: Frame = new Frame(...currentFrame);
 
-      if (totalFrameScore === MAX_FRAME_SCORE) {
-        bonusScore = this.getNextFrameRoll1(index);
+    if (frame.total === MAX_FRAME_SCORE) {
+      bonusScore = this.getNextFrameRoll1(index);
 
-        if (bonusScore === STRIKE) {
-          if (this._isLastFrame(index)) {
-            bonusScore += this.getNextStrikeFrameRoll1(index);
-          } else {
-            bonusScore += this.getNextFrameRoll2(index);
-          }
+      if (bonusScore === STRIKE) {
+        if (this._isLastFrame(index)) {
+          bonusScore += this.getNextStrikeFrameRoll1(index);
         } else {
-          // REGUALR
-          if (roll1 === MAX_FRAME_SCORE) {
-            bonusScore += this.getNextFrameRoll2(index);
-          }
+          bonusScore += this.getNextFrameRoll2(index);
+        }
+      } else {
+        // REGUALR
+        if (frame.roll1 === MAX_FRAME_SCORE) {
+          bonusScore += this.getNextFrameRoll2(index);
         }
       }
-      return totalFrameScore + bonusScore;
+    }
+    return frame.total + bonusScore;
   }
 
   getNextFrameRoll1(currentFrame) {
