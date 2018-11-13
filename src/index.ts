@@ -10,8 +10,7 @@ export class BowlingGame {
   getScore(gameScore) {
     const gameFrames = gameScore.split(' ');
     let gameScorePoints = 0;
-    this._gameScores = this.convertGameScoreToArray(gameFrames);
-
+    this._gameScores = this.convertGameScoresToValues(gameFrames);
 
     for (let i = 0; i < this._gameScores.length; i++) {
       let bonusScore = 0;
@@ -51,7 +50,7 @@ export class BowlingGame {
     return gameScorePoints;
   }
 
-  convertGameScoreToArray(gameScore) {
+  convertGameScoresToValues(gameScore) {
     return gameScore.map((frame) => {
       return this.calculateRollsValue(frame.split(''));
     });
