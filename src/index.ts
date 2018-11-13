@@ -53,18 +53,20 @@ export class BowlingGame {
 
   convertGameScoreToArray(gameScore) {
     return gameScore.map((frame) => {
-      const rolls = frame.split('');
-      return this.calculateRollsValue(rolls);
+      return this.calculateRollsValue(frame.split(''));
     });
   }
 
   calculateRollsValue(rolls: Array<string>) {
     return rolls.map((currentRoll, index) => {
       if (this._isSpare(index, currentRoll))
-        return this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
-
+        return this._calculateSpareValue(rolls, currentRoll, index);
       return this.getRollValue(currentRoll);
     });
+  }
+
+  private _calculateSpareValue(rolls, currentRoll, index) {
+    return this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
   }
 
   private _isSpare(index, currentRoll) {
