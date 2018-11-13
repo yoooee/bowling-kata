@@ -1,16 +1,13 @@
 const LAST_FRAME = 9;
+const GAME_SCORE_DELIMITER = ' ';
+const FRAME_ROLL_DELIMITER = '';
 
-class Roll {
-  score: number = 0;
-
-}
 export class BowlingGame {
   private _gameScores: Array<number>;
 
   getScore(gameScore) {
-    const gameFrames = gameScore.split(' ');
     let gameScorePoints = 0;
-    this._gameScores = this.convertGameScoresToValues(gameFrames);
+    this._gameScores = this.convertGameScoresToValues(gameScore.split(GAME_SCORE_DELIMITER));
 
     for (let i = 0; i < this._gameScores.length; i++) {
       let bonusScore = 0;
@@ -52,7 +49,7 @@ export class BowlingGame {
 
   convertGameScoresToValues(gameScore) {
     return gameScore.map((frame) => {
-      return this.calculateRollsValue(frame.split(''));
+      return this.calculateRollsValue(frame.split(FRAME_ROLL_DELIMITER));
     });
   }
 
