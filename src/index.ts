@@ -59,15 +59,11 @@ export class BowlingGame {
   }
 
   calculateRollsValue(rolls: Array<string>) {
-    let rollValue = 0;
-
     return rolls.map((currentRoll, index) => {
-      rollValue = this.getRollValue(currentRoll);
-
       if (this._isSpare(index, currentRoll))
-        rollValue = this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
+        return this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
 
-      return rollValue;
+      return this.getRollValue(currentRoll);
     });
   }
 
