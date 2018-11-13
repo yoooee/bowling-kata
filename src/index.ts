@@ -14,15 +14,15 @@ export class BowlingGame {
       const roll1 = this._gameScores[i][0] | 0;
       const roll2 = this._gameScores[i][1] | 0;
       const roll3 = this._gameScores[i][2] | 0;
-      const frameScore = roll1 + roll2 + roll3;
+      const totalFrameScore = roll1 + roll2 + roll3;
       const currentFrame = i;
       const nextFrame = i + 1;
       const nextNextFrame = i + 2;
 
-      if (this._isLastFrame(currentFrame)) {
-        if (frameScore === 10) {
+      if (totalFrameScore === 10) {
           bonusScore = this._gameScores[nextFrame][0];
 
+        if (this._isLastFrame(currentFrame)) {
           if (bonusScore === 10) {
             bonusScore += this._gameScores[nextNextFrame][0];
           } else {
@@ -30,18 +30,15 @@ export class BowlingGame {
               bonusScore += this._gameScores[nextFrame][1];
             }
           }
-        }
-      } else {
-        if (frameScore === 10) {
-          bonusScore = this._gameScores[nextFrame][0];
-
+        } else {
           if (bonusScore === 10) {
             bonusScore  += this._gameScores[nextFrame][1]
           }
         }
       }
 
-      gameScorePoints += frameScore + bonusScore;
+
+      gameScorePoints += totalFrameScore + bonusScore;
     }
 
     return gameScorePoints;
