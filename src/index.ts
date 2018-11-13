@@ -1,9 +1,4 @@
 const LAST_FRAME = 9;
-enum RollValue {
-  'X' = 10,
-  '/' = 10,
-  '-' = 0
-}
 
 export class BowlingGame {
   private _gameScores: Array<number>;
@@ -11,7 +6,8 @@ export class BowlingGame {
   getScore(gameScore) {
     const gameFrames = gameScore.split(' ');
     let gameScorePoints = 0;
-    this._gameScores = this.convertGameScoreToArray(gameFrames, RollValue);
+    this._gameScores = this.convertGameScoreToArray(gameFrames);
+
 
     for (let i = 0; i < this._gameScores.length; i++) {
       let bonusScore = 0;
@@ -23,7 +19,7 @@ export class BowlingGame {
       const nextFrame = i + 1;
       const nextNextFrame = i + 2;
 
-      if (currentFrame < 8) {
+      if (currentFrame < LAST_FRAME - 1) {
         if (frameScore === 10) {
           bonusScore = this._gameScores[nextFrame][0];
 
@@ -51,25 +47,32 @@ export class BowlingGame {
     return gameScorePoints;
   }
 
-  convertGameScoreToArray(gameScore, RollValue) {
+  convertGameScoreToArray(gameScore) {
     return gameScore.map((frame) => {
       const rolls = frame.split('');
-      let rollValue = 0;
-      const rollScores = rolls.map((roll, index) => {
-        if ((index === 1) && (roll === '/')) {
-          rollValue = RollValue[roll] - rolls[index -1];
-        } else {
-          rollValue = this.getRollValue(roll);
-        }
-        return rollValue;
-      });
-      return rollScores;
+      return this.calculateRollsValue(rolls);
     });
   }
 
+  calculateRollsValue(rolls) {
+    let rollValue = 0;
+
+    return rolls.map((roll, index) => {
+      if ((index === 1) && (roll === '/')) {
+        // calculate Spare Score
+        rollValue = this.getRollValue(roll) - rolls[index -1];
+      } else {
+        rollValue = this.getRollValue(roll);
+      }
+      return rollValue;
+    });
+
+  }
+
   getRollValue(roll) {
-    if (roll === '-') { return 0; }
-    if ((roll === 'X') || (roll === '/')) { return 10; }
+    if (roll === '-') return 0;
+    if ((roll === 'X') || (roll === '/')) return 10;
+
     return parseInt(roll);
   }
 }

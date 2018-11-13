@@ -106,4 +106,14 @@ describe('Bowling', () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  describe('a variety of standard scores with strikes and spares', () => {
+    it('should return a score of 159', () => {
+      let gamescore = '54 7/ 9- X 81 X X 8/ 9- 9/8';
+      let expected = 159;
+      let actual = bowlingGame.getScore(gamescore);
+
+      expect(actual).toEqual(expected);
+    });
+  });
 });
