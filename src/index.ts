@@ -20,7 +20,8 @@ export class BowlingGame {
       const nextNextFrame = i + 2;
 
       if (totalFrameScore === 10) {
-        bonusScore = this.getNextRoll(currentFrame);
+        // Strike or Spare
+        bonusScore = this.getNextFrameRoll1(currentFrame);
 
         if (bonusScore !== 10) {
           if (this._gameScores[currentFrame][0] === 10) {
@@ -41,7 +42,7 @@ export class BowlingGame {
     return gameScorePoints;
   }
 
-  getNextRoll(currentFrame) {
+  getNextFrameRoll1(currentFrame) {
     return this._gameScores[currentFrame + 1][0];
   }
 
