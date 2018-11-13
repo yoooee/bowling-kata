@@ -1,4 +1,5 @@
 const LAST_FRAME = 9;
+const MAX_FRAME_SCORE = 10;
 const GAME_SCORE_DELIMITER = ' ';
 const FRAME_ROLL_DELIMITER = '';
 
@@ -18,22 +19,23 @@ export class BowlingGame {
       const currentFrame = i;
       const nextFrame = i + 1;
       const nextNextFrame = i + 2;
+      let nextFrameRoll1 = 0;
 
-      if (totalFrameScore === 10) {
+      if (totalFrameScore === MAX_FRAME_SCORE) {
         // Strike or Spare
         bonusScore = this.getNextFrameRoll1(currentFrame);
 
-        if (bonusScore !== 10) {
-          // REGUALR
-          if (this._gameScores[currentFrame][0] === 10) {
+        if (bonusScore === MAX_FRAME_SCORE) {
+          // STRIKE
+          if (this._isLastFrame(currentFrame)) {
+            bonusScore += this.getNextStrikeFrameRoll1(currentFrame);
+          } else {
             bonusScore += this.getNextFrameRoll2(currentFrame);
           }
         } else {
-          // STRIKE
-          if (!this._isLastFrame(currentFrame)) {
+          // REGUALR
+          if (this._gameScores[currentFrame][0] === MAX_FRAME_SCORE) {
             bonusScore += this.getNextFrameRoll2(currentFrame);
-          } else {
-            bonusScore += this._gameScores[nextNextFrame][0];
           }
         }
       }
@@ -50,6 +52,10 @@ export class BowlingGame {
 
   getNextFrameRoll2(currentFrame) {
     return this._gameScores[currentFrame + 1][1];
+  }
+
+  getNextStrikeFrameRoll1(currentFrame) {
+    return this._gameScores[currentFrame + 2][0];
   }
 
   convertGameScoresToValues(gameScore) {
