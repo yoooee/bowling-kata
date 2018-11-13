@@ -20,23 +20,20 @@ export class BowlingGame {
       const nextNextFrame = i + 2;
 
       if (totalFrameScore === 10) {
-          bonusScore = this._gameScores[nextFrame][0];
+        bonusScore = this._gameScores[nextFrame][0];
 
-        if (this._isLastFrame(currentFrame)) {
-          if (bonusScore === 10) {
+        if (bonusScore === 10) {
+          if (this._isLastFrame(currentFrame)) {
             bonusScore += this._gameScores[nextNextFrame][0];
           } else {
-            if (this._gameScores[currentFrame][0] === 10) {
-              bonusScore += this._gameScores[nextFrame][1];
-            }
+            bonusScore += this._gameScores[nextFrame][1];
           }
         } else {
-          if (bonusScore === 10) {
-            bonusScore  += this._gameScores[nextFrame][1]
+          if (this._gameScores[currentFrame][0] === 10) {
+            bonusScore += this._gameScores[nextFrame][1];
           }
         }
       }
-
 
       gameScorePoints += totalFrameScore + bonusScore;
     }
