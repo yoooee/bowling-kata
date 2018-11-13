@@ -1,5 +1,9 @@
 const LAST_FRAME = 9;
 
+class Roll {
+  score: number = 0;
+
+}
 export class BowlingGame {
   private _gameScores: Array<number>;
 
@@ -60,14 +64,15 @@ export class BowlingGame {
     return rolls.map((currentRoll, index) => {
       rollValue = this.getRollValue(currentRoll);
 
-      if ((index === 1) && (currentRoll === '/')) {
-        // calculate Spare Score
+      if (this._isSpare(index, currentRoll))
         rollValue = this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
-      }
 
       return rollValue;
     });
+  }
 
+  private _isSpare(index, currentRoll) {
+    return ((index === 1) && (currentRoll === '/'));
   }
 
   getRollValue(roll) {
