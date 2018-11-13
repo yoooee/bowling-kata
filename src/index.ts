@@ -11,37 +11,35 @@ export class BowlingGame {
     let gameScorePoints = 0;
     this._gameScores = this.convertGameScoresToValues(gameScore.split(GAME_SCORE_DELIMITER));
 
-    for (let i = 0; i < this._gameScores.length; i++) {
+     return this._gameScores.reduce((totalScore: number, currentFrame: number, index: number) => {
+       return totalScore + this.getCurrentFrameScore(currentFrame, index);
+    }, 0);
+  }
+
+  getCurrentFrameScore(currentFrame, index) {
       let bonusScore = 0;
-      const roll1 = this._gameScores[i][0] | 0;
-      const roll2 = this._gameScores[i][1] | 0;
-      const roll3 = this._gameScores[i][2] | 0;
+      const roll1 = currentFrame[0] | 0;
+      const roll2 = currentFrame[1] | 0;
+      const roll3 = currentFrame[2] | 0;
       const totalFrameScore = roll1 + roll2 + roll3;
-      const currentFrame = i;
-      const nextFrame = i + 1;
-      const nextNextFrame = i + 2;
-      let nextFrameRoll1 = 0;
 
       if (totalFrameScore === MAX_FRAME_SCORE) {
-        bonusScore = this.getNextFrameRoll1(currentFrame);
+        bonusScore = this.getNextFrameRoll1(index);
 
         if (bonusScore === STRIKE) {
-          if (this._isLastFrame(currentFrame)) {
-            bonusScore += this.getNextStrikeFrameRoll1(currentFrame);
+          if (this._isLastFrame(index)) {
+            bonusScore += this.getNextStrikeFrameRoll1(index);
           } else {
-            bonusScore += this.getNextFrameRoll2(currentFrame);
+            bonusScore += this.getNextFrameRoll2(index);
           }
         } else {
           // REGUALR
           if (roll1 === MAX_FRAME_SCORE) {
-            bonusScore += this.getNextFrameRoll2(currentFrame);
+            bonusScore += this.getNextFrameRoll2(index);
           }
         }
       }
-      gameScorePoints += totalFrameScore + bonusScore;
-    }
-
-    return gameScorePoints;
+      return totalFrameScore + bonusScore;
   }
 
   getNextFrameRoll1(currentFrame) {
