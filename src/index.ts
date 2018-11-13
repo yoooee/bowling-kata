@@ -10,8 +10,8 @@ const FRAME_ROLL_DELIMITER = '';
 export class BowlingGame {
   private _gameScores: Array<number>;
 
-  getScore(gameScore) {
-    let gameScorePoints = 0;
+  getScore(gameScore): number {
+    let gameScorePoints: number = 0;
     this._gameScores = this.convertGameScoresToValues(gameScore.split(GAME_SCORE_DELIMITER));
 
     return this._gameScores.reduce((totalScore: number, currentFrame: number, index: number) => {
