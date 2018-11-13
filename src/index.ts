@@ -19,7 +19,7 @@ export class BowlingGame {
       const nextFrame = i + 1;
       const nextNextFrame = i + 2;
 
-      if (currentFrame < LAST_FRAME - 1) {
+      if (this._isLastFrame(currentFrame)) {
         if (frameScore === 10) {
           bonusScore = this._gameScores[nextFrame][0];
 
@@ -63,6 +63,10 @@ export class BowlingGame {
 
   private _calculateSpareValue(rolls, currentRoll, index) {
     return this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
+  }
+
+  private _isLastFrame(frame) {
+    return frame < LAST_FRAME - 1;
   }
 
   private _isSpare(index, currentRoll) {
