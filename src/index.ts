@@ -54,13 +54,13 @@ export class BowlingGame {
     });
   }
 
-  calculateRollsValue(rolls) {
+  calculateRollsValue(rolls: Array<string>) {
     let rollValue = 0;
 
     return rolls.map((roll, index) => {
       if ((index === 1) && (roll === '/')) {
         // calculate Spare Score
-        rollValue = this.getRollValue(roll) - rolls[index -1];
+        rollValue = this.getRollValue(roll) - this.getRollValue(rolls[index -1]);
       } else {
         rollValue = this.getRollValue(roll);
       }
