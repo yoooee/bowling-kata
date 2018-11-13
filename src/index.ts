@@ -57,13 +57,14 @@ export class BowlingGame {
   calculateRollsValue(rolls: Array<string>) {
     let rollValue = 0;
 
-    return rolls.map((roll, index) => {
-      if ((index === 1) && (roll === '/')) {
+    return rolls.map((currentRoll, index) => {
+      rollValue = this.getRollValue(currentRoll);
+
+      if ((index === 1) && (currentRoll === '/')) {
         // calculate Spare Score
-        rollValue = this.getRollValue(roll) - this.getRollValue(rolls[index -1]);
-      } else {
-        rollValue = this.getRollValue(roll);
+        rollValue = this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
       }
+
       return rollValue;
     });
 
