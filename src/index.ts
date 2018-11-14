@@ -31,11 +31,12 @@ export class BowlingGame {
       bonusScore = this.getNextFrameRoll1(frame.index);
 
       if (bonusScore === STRIKE) {
-        if (this._isLastFrame(frame.index)) {
-          bonusScore += this.getNextStrikeFrameRoll1(frame.index);
-        } else {
-          bonusScore += this.getNextFrameRoll2(frame.index);
-        }
+        //if (this._isLastFrame(frame.index)) {
+          //bonusScore += this.getNextStrikeFrameRoll1(frame.index);
+        //} else {
+          //bonusScore += this.getNextFrameRoll2(frame.index);
+        //}
+        bonusScore += this.getNextRoll(frame.index);
       } else {
         // REGUALR
         if (frame.roll1 === MAX_FRAME_SCORE) {
@@ -46,6 +47,15 @@ export class BowlingGame {
     return bonusScore;
   }
 
+  getNextRoll(currentFrameIndex) {
+    let bonusScore = 0;
+        if (this._isLastFrame(currentFrameIndex)) {
+          bonusScore += this._gameScores[currentFrameIndex + 2][0];
+        } else {
+          bonusScore += this._gameScores[currentFrameIndex + 1][1];
+        }
+return bonusScore;
+  }
   getNextFrameRoll1(currentFrame) {
     return this._gameScores[currentFrame + 1][0];
   }
@@ -76,8 +86,8 @@ export class BowlingGame {
     return this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
   }
 
-  private _isLastFrame(frame) {
-    return frame < LAST_FRAME - 1;
+  private _isLastFrame(frameIndex) {
+    return frameIndex < LAST_FRAME - 1;
   }
 
   private _isSpare(index, currentRoll) {
