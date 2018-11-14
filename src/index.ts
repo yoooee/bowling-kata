@@ -58,10 +58,6 @@ export class BowlingGame {
     return this._gameScores[currentFrame + 1][1];
   }
 
-  getNextStrikeFrameRoll1(currentFrame) {
-    return this._gameScores[currentFrame + 2][0];
-  }
-
   convertGameScoresToValues(gameScore) {
     return gameScore.map((frame) => {
       return this.calculateRollsValue(frame.split(FRAME_ROLL_DELIMITER));
