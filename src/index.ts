@@ -31,11 +31,6 @@ export class BowlingGame {
       bonusScore = this.getNextFrameRoll1(frame.index);
 
       if (bonusScore === STRIKE) {
-        //if (this._isLastFrame(frame.index)) {
-        //bonusScore += this.getNextStrikeFrameRoll1(frame.index);
-        //} else {
-        //bonusScore += this.getNextFrameRoll2(frame.index);
-        //}
         bonusScore += this.getNextRoll(frame.index);
       } else {
         // REGUALR
@@ -50,10 +45,11 @@ export class BowlingGame {
   getNextRoll(currentFrameIndex) {
     if (this._isLastFrame(currentFrameIndex)) {
       return this._gameScores[currentFrameIndex + 2][0];
-    } else {
-      return this._gameScores[currentFrameIndex + 1][1];
     }
+
+    return this._gameScores[currentFrameIndex + 1][1];
   }
+
   getNextFrameRoll1(currentFrame) {
     return this._gameScores[currentFrame + 1][0];
   }
