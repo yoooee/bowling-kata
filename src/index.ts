@@ -20,14 +20,13 @@ export class BowlingGame {
   }
 
   getCurrentFrameScore(currentFrame, index) {
-    let bonusScore = 0;
     const frame: Frame = new Frame(index, ...currentFrame);
-    bonusScore = this.calculateBonusScore(frame);
-    return frame.total + bonusScore;
+    return frame.total + this.calculateBonusScore(frame);
   }
 
   calculateBonusScore(frame :Frame) {
-   let bonusScore = 0; 
+    let bonusScore = 0;
+
     if (frame.total === MAX_FRAME_SCORE) {
       bonusScore = this.getNextFrameRoll1(frame.index);
 
