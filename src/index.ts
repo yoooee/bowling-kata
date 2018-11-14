@@ -21,25 +21,30 @@ export class BowlingGame {
 
   getCurrentFrameScore(currentFrame, index) {
     let bonusScore = 0;
-    const frame: Frame = new Frame(...currentFrame);
+    const frame: Frame = new Frame(index, ...currentFrame);
+    bonusScore = this.calculateBonusScore(frame);
+    return frame.total + bonusScore;
+  }
 
+  calculateBonusScore(frame :Frame) {
+   let bonusScore = 0; 
     if (frame.total === MAX_FRAME_SCORE) {
-      bonusScore = this.getNextFrameRoll1(index);
+      bonusScore = this.getNextFrameRoll1(frame.index);
 
       if (bonusScore === STRIKE) {
-        if (this._isLastFrame(index)) {
-          bonusScore += this.getNextStrikeFrameRoll1(index);
+        if (this._isLastFrame(frame.index)) {
+          bonusScore += this.getNextStrikeFrameRoll1(frame.index);
         } else {
-          bonusScore += this.getNextFrameRoll2(index);
+          bonusScore += this.getNextFrameRoll2(frame.index);
         }
       } else {
         // REGUALR
         if (frame.roll1 === MAX_FRAME_SCORE) {
-          bonusScore += this.getNextFrameRoll2(index);
+          bonusScore += this.getNextFrameRoll2(frame.index);
         }
       }
     }
-    return frame.total + bonusScore;
+    return bonusScore;
   }
 
   getNextFrameRoll1(currentFrame) {
