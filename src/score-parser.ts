@@ -4,7 +4,7 @@ const FRAME_ROLL_DELIMITER = '';
 export class ScoreParser {
   private _gameScores: Array<number>;
 
-  constructor (gameScores) {
+  constructor (gameScores: string) {
     this._gameScores = this.convertGameScoresToValues(gameScores.split(GAME_SCORE_DELIMITER));
   }
 
