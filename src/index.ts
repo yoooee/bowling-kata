@@ -43,7 +43,7 @@ export class BowlingGame {
   }
 
   getNextRoll(currentFrameIndex) {
-    if (this._isLastFrame(currentFrameIndex)) {
+    if (!this._isLastFrame(currentFrameIndex)) {
       return this._gameScores[currentFrameIndex + 2][0];
     }
 
@@ -77,7 +77,7 @@ export class BowlingGame {
   }
 
   private _isLastFrame(frameIndex) {
-    return frameIndex < LAST_FRAME - 1;
+    return frameIndex >= LAST_FRAME - 1;
   }
 
   private _isSpare(index, currentRoll) {
