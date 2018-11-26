@@ -62,6 +62,3 @@ export class BowlingGame {
   }
 
 }
-let gameScore = 'X X X X X X X X X XXX';
-let newGame = new BowlingGame();
-console.log(newGame.getScore(gameScore));
