@@ -1,16 +1,21 @@
+import { Frame } from './frame';
+
 const GAME_SCORE_DELIMITER = ' ';
 const FRAME_ROLL_DELIMITER = '';
 
 export class ScoreParser {
-  private _gameScores: Array<number>;
+  private _gameScores: Array<Frame>;
 
   constructor (gameScores: string) {
-    this._gameScores = this.convertGameScoresToValues(gameScores.split(GAME_SCORE_DELIMITER));
+    this._gameScores = this._convertGameScoresToFrames(gameScores.split(GAME_SCORE_DELIMITER));
   }
 
-  convertGameScoresToValues(gameScore) {
-    return gameScore.map((frame) => {
-      return this.calculateRollsValue(frame.split(FRAME_ROLL_DELIMITER));
+  private _convertGameScoresToFrames(gameScores) {
+    return gameScores.map((frame, index) => {
+      const frameRollValues = this.calculateRollsValue(frame.split(FRAME_ROLL_DELIMITER));
+      const currentFrame = new Frame(index, ...frameRollValues);
+
+     return currentFrame;
     });
   }
 
@@ -21,6 +26,7 @@ export class ScoreParser {
       return this.getRollValue(currentRoll);
     });
   }
+
   private _calculateSpareValue(rolls, currentRoll, index) {
     return this.getRollValue(currentRoll) - this.getRollValue(rolls[index -1]);
   }

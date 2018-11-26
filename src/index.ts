@@ -7,27 +7,25 @@ const STRIKE = 10;
 
 
 export class BowlingGame {
-  private _gameScores: Array<number>;
+  private _gameScores: Array<Frame>;
 
   getScore(gameScore): number {
     let gameScorePoints: number = 0;
     let bowlingGameScores = new ScoreParser(gameScore);
     this._gameScores = bowlingGameScores.gameScores();
 
-
-    return this._gameScores.reduce((totalScore: number, currentFrame: number, index: number) => {
-      return totalScore + this.getCurrentFrameScore(currentFrame, index);
+    return this._gameScores.reduce((totalScore: number, currentFrame: Frame) => {
+      return totalScore + this.getCurrentFrameScore(currentFrame);
     }, 0);
   }
 
-  getCurrentFrameScore(currentFrame, index) {
-    const frame: Frame = new Frame(index, ...currentFrame);
-    return frame.total + this.calculateBonusScore(frame);
+  getCurrentFrameScore(currentFrame) {
+    let bonus = this.calculateBonusScore(currentFrame);
+    return currentFrame.total + this.calculateBonusScore(currentFrame);
   }
 
   calculateBonusScore(frame :Frame) {
     let bonusScore = 0;
-
     if (frame.total === MAX_FRAME_SCORE) {
       bonusScore = this.getNextFrameRoll1(frame.index);
 
@@ -45,18 +43,18 @@ export class BowlingGame {
 
   getNextRoll(currentFrameIndex) {
     if (!this._isLastFrame(currentFrameIndex)) {
-      return this._gameScores[currentFrameIndex + 2][0];
+      return this._gameScores[currentFrameIndex + 2].roll1;
     }
 
-    return this._gameScores[currentFrameIndex + 1][1];
+    return this._gameScores[currentFrameIndex + 1].roll2;
   }
 
   getNextFrameRoll1(currentFrame) {
-    return this._gameScores[currentFrame + 1][0];
+    return this._gameScores[currentFrame + 1].roll1;
   }
 
   getNextFrameRoll2(currentFrame) {
-    return this._gameScores[currentFrame + 1][1];
+    return this._gameScores[currentFrame + 1].roll2
   }
 
   private _isLastFrame(frameIndex) {
@@ -64,4 +62,6 @@ export class BowlingGame {
   }
 
 }
-
+let gameScore = 'X X X X X X X X X XXX';
+let newGame = new BowlingGame();
+console.log(newGame.getScore(gameScore));
