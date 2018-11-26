@@ -55,5 +55,4 @@ export class BowlingGame {
   private _isLastFrame(frameIndex) {
     return frameIndex >= LAST_FRAME - 1;
   }
-
 }
