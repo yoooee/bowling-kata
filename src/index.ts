@@ -5,12 +5,10 @@ const LAST_FRAME = 9;
 const MAX_FRAME_SCORE = 10;
 const STRIKE = 10;
 
-
 export class BowlingGame {
   private _gameScores: Array<Frame>;
 
   getScore(gameScore): number {
-    let gameScorePoints: number = 0;
     let bowlingGameScores = new ScoreParser(gameScore);
     this._gameScores = bowlingGameScores.gameScores();
 
@@ -26,15 +24,16 @@ export class BowlingGame {
 
   calculateBonusScore(frame :Frame) {
     let bonusScore = 0;
+
     if (frame.total === MAX_FRAME_SCORE) {
-      bonusScore = this.getNextFrameRoll1(frame.index);
+      bonusScore = this.getNextFrame(frame.index).roll1;
 
       if (bonusScore === STRIKE) {
         bonusScore += this.getNextRoll(frame.index);
       } else {
         // REGUALR
         if (frame.roll1 === MAX_FRAME_SCORE) {
-          bonusScore += this.getNextFrameRoll2(frame.index);
+          bonusScore += this.getNextFrame(frame.index).roll2;
         }
       }
     }
@@ -49,12 +48,8 @@ export class BowlingGame {
     return this._gameScores[currentFrameIndex + 1].roll2;
   }
 
-  getNextFrameRoll1(currentFrame) {
-    return this._gameScores[currentFrame + 1].roll1;
-  }
-
-  getNextFrameRoll2(currentFrame) {
-    return this._gameScores[currentFrame + 1].roll2
+  getNextFrame(currentFrame) {
+    return this._gameScores[currentFrame + 1];
   }
 
   private _isLastFrame(frameIndex) {
