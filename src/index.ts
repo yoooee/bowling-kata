@@ -30,13 +30,11 @@ export class BowlingGame {
 
       if (bonusScore === STRIKE) {
         bonusScore += this.getNextRoll(frame.index);
-      } else {
-        // REGUALR
-        if (frame.roll1 === MAX_FRAME_SCORE) {
+      } else if (frame.roll1 === MAX_FRAME_SCORE) {
           bonusScore += this.getNextFrame(frame.index).roll2;
-        }
       }
     }
+
     return bonusScore;
   }
 
